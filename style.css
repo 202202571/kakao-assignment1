@@ -1,0 +1,280 @@
+/* 기본 스타일 초기화 및 폰트 적용 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 주간 뷰 달력 스타일 */
+.weekly-calendar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+/* 날짜별 카드 스타일 */
+.day-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 13%;
+    transition: background-color 0.2s ease;
+}
+
+.day-card:hover {
+    background-color: #f0eafb;
+}
+
+/* 선택된 날짜 스타일 */
+.day-card.active {
+    background-color: #672be0;
+    color: white;
+}
+
+.day-name {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.day-card.active .day-name {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.day-number {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.todo-count {
+    font-size: 11px;
+    color: #672be0;
+    font-weight: 700;
+    min-height: 16px; /* 투두가 없어도 높이 유지 */
+}
+
+.day-card.active .todo-count {
+    color: #ffd700; /* 활성화 시 카운트 색상 포인트 */
+}
+
+/* To-do 컨테이너 */
+.todo-container {
+    background-color: white;
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* 일간 뷰 날짜 스타일 */
+.date-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+#current-date-display {
+    color: #333;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.date-nav-btn {
+    background-color: transparent;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date-nav-btn:hover {
+    background-color: white;
+    color: #672be0;
+    border-color: #672be0;
+}
+
+/* 입력창 및 추가 버튼 스타일 */
+.input-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+#todo-input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+#todo-input:focus {
+    border-color: #672be0;
+}
+
+#add-btn {
+    background-color: #672be0;
+    color: white;
+    border: none;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#add-btn:hover {
+    background-color: #5824c0;
+}
+
+/* 필터 탭 스타일 */
+.filter-section {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 16px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    background-color: #f4f5f8;
+    color: #333;
+}
+
+.filter-btn.active {
+    background-color: #f0eafb;
+    color: #672be0;
+    font-weight: 700;
+}
+
+/* 리스트 스타일 제거 및 빈 상태 안내 텍스트 */
+#todo-list {
+    list-style: none;
+}
+
+.empty-message {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    padding: 24px 0;
+}
+
+/* Todo 아이템 */
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.todo-content {
+    flex: 1;
+    margin-right: 16px;
+    overflow: hidden;
+}
+
+.todo-text {
+    font-size: 15px;
+    color: #333;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+.todo-text.finished {
+    text-decoration: line-through;
+    color: #a0a0a0;
+}
+
+/* 인라인 에디트 입력창 스타일 */
+.edit-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #672be0;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(103, 43, 224, 0.2);
+}
+
+/* 버튼 그룹 */
+.todo-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background-color: transparent;
+    border: 1px solid #d9d9d9;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.action-btn.complete-btn {
+    color: #672be0;
+    border-color: #672be0;
+}
+
+.action-btn.complete-btn:hover {
+    background-color: #672be0;
+    color: white;
+}
+
+.action-btn.delete-btn {
+    color: #e02b2b;
+    border-color: #e02b2b;
+}
+
+.action-btn.delete-btn:hover {
+    background-color: #e02b2b;
+    color: white;
+}
