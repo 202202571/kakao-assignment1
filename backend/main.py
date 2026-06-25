@@ -77,7 +77,7 @@ def get_todo(todo_id: int, db: Session = Depends(get_db)):
 
 @app.post("/todos", response_model=TodoResponse)
 def create_todo(todo: TodoCreate, db: Session = Depends(get_db)):
-    # 수정: due_date가 들어오면 사용하고, 없으면 오늘 날짜 사용
+    # 수정: due_date가 들어오면 사용하고, 없으면 오늘 날짜 사용(due_date: 마감일)
     db_todo = Todo(
         title=todo.title, 
         due_date=todo.due_date or str(date.today())
