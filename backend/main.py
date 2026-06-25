@@ -8,29 +8,29 @@ from sqlalchemy.orm import sessionmaker, Session
 from pydantic import BaseModel
 from typing import List, Optional
 
-# 환경변수 로드
+# 환경변수 가져오기
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./todos.db")
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# 2. DB 모델
+# DB 모델 설정
 class Todo(Base):
     __tablename__ = "todos"
     
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     is_completed = Column(Boolean, default=False)
-    # [수정] 날짜 필드 추가 (기본값은 오늘)
+    # 수정: 날짜 필드 (기본값은 오늘)
     due_date = Column(String, default=lambda: str(date.today()))
 
-# 3. Pydantic 스키마
-class TodoCreate(BaseModel):
+# Pydantic 스키마
+class TodoCreate(BaseModel): # 생성
     title: str
     due_date: Optional[str] = None # 생성 시 날짜를 지정할 수 있게 함
 
-class TodoUpdate(BaseModel):
+class TodoUpdate(BaseModel): # 수정
     title: Optional[str] = None
     is_completed: Optional[bool] = None
     due_date: Optional[str] = None
@@ -39,7 +39,7 @@ class TodoResponse(BaseModel):
     id: int
     title: str
     is_completed: bool
-    due_date: str # 응답에도 포함
+    due_date: str # 응답에 포함시키기
 
     model_config = {"from_attributes": True}
 
@@ -63,7 +63,7 @@ def get_db():
     finally:
         db.close()
 
-# 8. CRUD 엔드포인트
+# 8. CRUD 엔드포인트 설정
 @app.get("/todos", response_model=List[TodoResponse])
 def get_todos(db: Session = Depends(get_db)):
     return db.query(Todo).all()
@@ -77,7 +77,7 @@ def get_todo(todo_id: int, db: Session = Depends(get_db)):
 
 @app.post("/todos", response_model=TodoResponse)
 def create_todo(todo: TodoCreate, db: Session = Depends(get_db)):
-    # [수정] due_date가 들어오면 사용하고, 없으면 오늘 날짜 사용
+    # 수정: due_date가 들어오면 사용하고, 없으면 오늘 날짜 사용
     db_todo = Todo(
         title=todo.title, 
         due_date=todo.due_date or str(date.today())
